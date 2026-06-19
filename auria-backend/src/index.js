@@ -4,6 +4,9 @@ require('dotenv').config()
 
 const authRoutes = require('./routes/auth.routes')
 
+// agregado fla
+const productosRoutes = require('./routes/productos.routes')
+
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -13,6 +16,7 @@ app.use(express.json())
 
 // Rutas
 app.use('/api/auth', authRoutes)
+app.use('/api/productos', productosRoutes)
 
 // Ruta de prueba
 app.get('/', (req, res) => {
