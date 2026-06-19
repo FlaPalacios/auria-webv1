@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id             String   @id @default(uuid())
+  nombre_usuario String   @unique
+  correo         String   @unique
+  contrasena     String
+  rol            Rol      @default(cliente)
+  creado_en      DateTime @default(now())
+
+  favoritos            Favorito[]
+  pedidos_personalizados PedidoPersonalizado[]
+}
+
+enum Rol {
+  cliente
+  admin
+}
+
+model Categoria {
+  id        String     @id @default(uuid())
+  nombre    String     @unique
+  creado_en DateTime   @default(now())
+
+  productos Producto[]
+}
+
+model Producto {
+  id             String   @id @default(uuid())
+  nombre         String
+  descripcion    String?
+  precio         Decimal? @db.Decimal(10, 2)
+  precio_visible Boolean  @default(false)
+  creado_en      DateTime @default(now())
+
+  categoria    Categoria      @relation(fields: [categoria_id], references: [id])
+  categoria_id String
+
+  tallas   ProductoTalla[]
+  imagenes ImagenProducto[]
+  favoritos Favorito[]
+}
+
+model Talla {
+  id     String @id @default(uuid())
+  nombre String @unique
+
+  productos ProductoTalla[]
+}
+
+model ProductoTalla {
+  producto    Producto @relation(fields: [producto_id], references: [id])
+  producto_id String
+  talla       Talla    @relation(fields: [talla_id], references: [id])
+  talla_id    String
+
+  @@id([producto_id, talla_id])
+}
+
+model ImagenProducto {
+  id          String   @id @default(uuid())
+  url         String
+  es_principal Boolean @default(false)
+  creado_en   DateTime @default(now())
+
+  producto    Producto @relation(fields: [producto_id], references: [id])
+  producto_id String
+}
+
+model Favorito {
+  id        String   @id @default(uuid())
+  creado_en DateTime @default(now())
+
+  usuario    Usuario  @relation(fields: [usuario_id], references: [id])
+  usuario_id String
+  producto   Producto @relation(fields: [producto_id], references: [id])
+  producto_id String
+}
+
+model PedidoPersonalizado {
+  id              String              @id @default(uuid())
+  nombre          String
+  numero_telefono String
+  descripcion     String
+  estado          EstadoPedido        @default(pendiente)
+  creado_en       DateTime            @default(now())
+
+  usuario    Usuario? @relation(fields: [usuario_id], references: [id])
+  usuario_id String?
+}
+
+enum EstadoPedido {
+  pendiente
+  revisado
+  contactado
+}
