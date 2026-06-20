@@ -6,6 +6,10 @@ const authRoutes = require('./routes/auth.routes')
 
 // agregado fla
 const productosRoutes = require('./routes/productos.routes')
+const categoriasRoutes = require('./routes/categorias.routes')
+const favoritosRoutes = require('./routes/favoritos.routes')
+const pedidosRoutes = require('./routes/pedidos.routes')
+const adminRoutes = require('./routes/admin.routes')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -17,6 +21,12 @@ app.use(express.json())
 // Rutas
 app.use('/api/auth', authRoutes)
 app.use('/api/productos', productosRoutes)
+
+// sigue agregando fla
+app.use('/api/categorias', categoriasRoutes)
+app.use('/api/favoritos', favoritosRoutes)
+app.use('/api/pedidos', pedidosRoutes)
+app.use('/api/admin', adminRoutes)
 
 // Ruta de prueba
 app.get('/', (req, res) => {
