@@ -28,9 +28,8 @@ Catálogo digital de prendas artesanales de baby alpaca. Web con panel de client
 ---
 
 ## Tipografía
-
-- **Display / marca:** `Ananda` — títulos del hero, nombre Auria, encabezados principales
-- **UI / cuerpo:** `Coolvetica` — navegación, botones, etiquetas, precios, texto corrido
+- **Display / marca:** `Ananda Personal Use` — archivo: `Ananda Personal Use.ttf`
+- **UI / cuerpo:** `Coolvetica Rg Cond` — archivo: `Coolvetica Rg Cond.otf`
 - Si las fuentes no cargan, fallback: `'Playfair Display'` para display y `'Inter'` para UI
 - Ambas fuentes están en `/src/assets/fonts/`
 
